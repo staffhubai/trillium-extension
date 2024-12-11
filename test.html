@@ -1,0 +1,58 @@
+// test.html (for testing the extension)
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Screenshot Extension Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        #screenshot {
+            max-width: 100%;
+            border: 1px solid #ccc;
+            margin: 10px 0;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .error {
+            color: red;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Screenshot Extension Test</h1>
+    <button id="captureBtn">Capture Screenshot</button>
+    <div id="errorMsg" class="error"></div>
+    <img id="screenshot" />
+
+    <script>
+        const EXTENSION_ID = 'dekbdcofkncdpopkhbhiekfcbbojaneo'; // Update this after installing
+
+        document.getElementById('captureBtn').addEventListener('click', async () => {
+            try {
+                const response = await chrome.runtime.sendMessage(EXTENSION_ID, {
+                    type: 'getScreenshot'
+                });
+                
+                if (response.success) {
+                    document.getElementById('screenshot').src = response.screenshot;
+                    document.getElementById('errorMsg').textContent = '';
+                } else {
+                    document.getElementById('errorMsg').textContent = 
+                        `Screenshot failed: ${response.error}`;
+                }
+            } catch (error) {
+                document.getElementById('errorMsg').textContent = 
+                    `Error: ${error.message}`;
+            }
+        });
+    </script>
+</body>
+</html>

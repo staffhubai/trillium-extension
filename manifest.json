@@ -1,0 +1,41 @@
+{
+    "name": "Tab Screenshot Capture",
+    "description": "Captures screenshots of the current tab for AI analysis",
+    "version": "1.0",
+    "manifest_version": 3,
+    "permissions": [
+        "activeTab",
+        "tabs",
+        "sidePanel",
+        "scripting"
+    ],
+    "host_permissions": [
+        "*://*.replit.com/*",
+        "*://*.replit.dev/*",
+        "*://*.replit.app/*",
+        "<all_urls>"
+    ],
+    "externally_connectable": {
+        "matches": [
+            "*://*.replit.com/*",
+            "*://*.replit.dev/*",
+            "*://*.replit.app/*"
+        ]
+    },
+    "background": {
+        "service_worker": "service-worker.js"
+    },
+    "side_panel": {
+        "default_path": "sidepanel.html"
+    },
+    "action": {
+        "default_title": "Open Screenshot Panel"
+    },
+    "content_security_policy": {
+        "extension_pages": "default-src 'self'; img-src 'self' data: blob:; frame-src https://trillium-tutor2.replit.app https://*.replit.app; connect-src https://*.replit.app"
+    },
+    "web_accessible_resources": [{
+        "resources": ["sidepanel.js", "communication.js", "styles.css"],
+        "matches": ["<all_urls>"]
+    }]
+}
